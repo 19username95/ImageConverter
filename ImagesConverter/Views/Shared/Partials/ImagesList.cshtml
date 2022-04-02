@@ -1,0 +1,33 @@
+﻿
+@using ImagesConverter.ViewModels
+
+@model ImageListModel
+
+
+<table id="infoTable" class="table table-fixed table-condensed">
+    <thead>
+        <tr>
+            <th class="col-xs-1">&nbsp;</th>
+            <th class="col-xs-1">Id</th>
+            <th class="col-xs-3">Title</th>
+            <th class="col-xs-3">Image Name</th>
+            <th class="col-xs-1">Date Converted</th>
+            <th class="col-xs-3">Image</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var image in Model.Items)
+        {
+            <tr class="clickableRow">
+                <td class="col-xs-1"><p><input type="checkbox" name="imageIDs" data-image-id="@image.Id" /></p></td>
+                <td class="col-xs-1"><p>@image.Id</p></td>
+                <td class="col-xs-3"><p>@image.Title</p></td>
+                <td class="col-xs-3"><p>@image.ImageName</p></td>
+                <td class="col-xs-1"><p>@image.DateConverted</p></td>
+                <td class="col-xs-3">
+                    <img width="100" src="data:@image.MimeType;base64,@image.ImageBase64" alt="Image from base64 string" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

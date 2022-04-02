@@ -1,0 +1,46 @@
+﻿
+@using ImagesConverter.ViewModels
+
+@model ImageModel
+
+@using (Html.BeginForm("AddImage", "Home", FormMethod.Post, new { id = "uploadForm" }))
+{
+    <div class="well bs-component">
+        <br />
+        <div class="row">
+            <div class="col-md-12 col-md-push-2">
+                <div class="form-group">
+                    <div class="col-md-10 col-md-pull-1">
+                        @Html.TextBoxFor(m => m.Title, new { placeholder = Html.DisplayNameFor(m => m.Title), @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Title)
+
+                        <input type="file" id="file" name="file" class="form-control mt-3 @(!Model.Status == false ? "input-validation-error" : String.Empty)" accept="image/*" />
+                        @if (Model.Status.HasValue)
+                        {
+                            if (!Model.Status.Value)
+                            {
+                                <span class="field-validation-error">@Model.StatusMessage</span> 
+                            }
+                            else
+                            {
+                                <div class="alert-success my-3 py-2 px-3">@Model.StatusMessage</div>
+                            }
+
+                        }
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10 col-md-push-2 mt-3">
+                        <div>
+                            <button type="submit"
+                                    class="btn btn-primary px-4"
+                                    value="Process">
+                                <span class="ladda-label">Upload</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

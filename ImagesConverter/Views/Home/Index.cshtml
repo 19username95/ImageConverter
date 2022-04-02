@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Images";
+}
+
+@using ImagesConverter.ViewModels
+
+@model IndexViewModel 
+
+@section scripts 
+{
+    <script type="text/javascript" src="~/Scripts/app.js"></script>    
+}
+
+<section class="add-image container">
+    <div class="panel-heading">
+        <div class="col-md-8">
+            <h3>
+                <span>Add Image</span>
+            </h3>
+        </div>
+    </div>
+    <div>
+        <section class="col-md-4 col-md-push-4" id="uploadFormWrapper">
+            @Html.Partial(IndexViewModel.PARTIAL_UPLOAD_FORM, Model.ImageModel)
+        </section>
+    </div>
+
+</section>
+<section class="image-table container mt-5">
+    <h3>Converted Images</h3>
+
+    <button type="button" class="btn btn-primary mt-3" id="downloadZip">Download zip</button>
+
+    <div id="imagesListWrapper" class="mt-4">
+        @Html.Partial(IndexViewModel.PARTIAL_IMAGES_LIST, Model.ImagesList)
+    </div>
+</section>

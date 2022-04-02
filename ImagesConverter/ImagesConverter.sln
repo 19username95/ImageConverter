@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31410.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImagesConverter", "ImagesConverter.csproj", "{948546BE-D641-47C2-B87C-B216C8688CC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImagesConverter.Tests", "..\ImagesConverter.Tests\ImagesConverter.Tests.csproj", "{1DE3FF9A-BD68-4794-9067-0A53FCF11699}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{948546BE-D641-47C2-B87C-B216C8688CC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{948546BE-D641-47C2-B87C-B216C8688CC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{948546BE-D641-47C2-B87C-B216C8688CC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{948546BE-D641-47C2-B87C-B216C8688CC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DE3FF9A-BD68-4794-9067-0A53FCF11699}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DE3FF9A-BD68-4794-9067-0A53FCF11699}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DE3FF9A-BD68-4794-9067-0A53FCF11699}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DE3FF9A-BD68-4794-9067-0A53FCF11699}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ABFAF6D2-E3F7-4711-BD37-37693F4BC01B}
+	EndGlobalSection
+EndGlobal
