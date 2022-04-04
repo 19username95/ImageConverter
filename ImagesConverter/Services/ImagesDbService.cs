@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
 namespace ImagesConverter.Services
 {
-    public class ImagesDbService
+    public class ImagesDbService 
     {
         private readonly StandardApiDbContext _context;
 
@@ -24,10 +25,16 @@ namespace ImagesConverter.Services
                 _context.ImageFiles.Where(_ => ids.Contains(_.Id)).ToListAsync();
         }
 
-        public async Task AddImageAsync(ImageFile entity)
+        public async Task<ImageFile> AddImageAsync(ImageFile entity)
         {
             _context.ImageFiles.Add(entity);
             await _context.SaveChangesAsync();
+            return entity;
         }
+
+        //public async Task<File> GetZip(IEnumerable<ImageFile> files)
+        //{
+
+        //}
     }
 }

@@ -30,10 +30,30 @@ namespace ImagesConverter.Controllers
             var imageFiles = await this._dbService.LoadImagesAsync();
             return View(new IndexViewModel(imageFiles));
         }
+        
+        private ImageFile MapImageToImageFile(ImageModel model, HttpPostedFileBase image)
+        {
+            var result = new ImageFile()
+            {
+                DateConverted = DateTime.Now,
+                ImageName = image.FileName,
+                MimeType = image.ContentType,
+                Title = model.Title
+            };
 
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<JsonResult> AddImage(ImageModel model, HttpPostedFileBase file)
+            byte[] imageAsBytes = new byte[image.ContentLength];
+            using (BinaryReader binaryReader = new BinaryReader(image.InputStream))
+            {
+                imageAsBytes = binaryReader.ReadBytes(image.ContentLength);
+            }
+            string imageAsBase64 = Convert.ToBase64String(imageAsBytes);
+
+            result.ImageBase64 = imageAsBase64;
+
+            return result;
+        }
+        
+        public async Task<ImageFile> SaveImage(ImageModel model, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
@@ -48,13 +68,15 @@ namespace ImagesConverter.Controllers
                         else
                         {
                             var entity = MapImageToImageFile(model, file);
-                            await this._dbService.AddImageAsync(entity);
+                            var result = await this._dbService.AddImageAsync(entity);
                             model.Success();
+                            return result;
                         }
                     }
                     else
                     {
                         model.SetFileError("File is required!");
+                        return null;
                     }
                 }
                 catch (Exception ex)
@@ -63,7 +85,11 @@ namespace ImagesConverter.Controllers
                 }
             }
 
+            return null;
+        }
 
+        private async Task<Dictionary<string, string>> RenderUploadForm(ImageModel model)
+        {
             var viewData = new Dictionary<string, string>();
 
             viewData.Add("uploadFormWrapper", RenderHelper.PartialView(this.ControllerContext, IndexViewModel.PARTIAL_UPLOAD_FORM, model));
@@ -73,6 +99,16 @@ namespace ImagesConverter.Controllers
                 var imageFiles = await this._dbService.LoadImagesAsync();
                 viewData.Add("imagesListWrapper", RenderHelper.PartialView(this.ControllerContext, IndexViewModel.PARTIAL_IMAGES_LIST, new ImageListModel(imageFiles)));
             }
+            return viewData;
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<JsonResult> AddImage(ImageModel model, HttpPostedFileBase file)
+        {
+            await SaveImage(model, file);
+
+            var viewData = await RenderUploadForm(model);
 
             return Json(JsonResponse.Ok(viewData));
         }
@@ -139,28 +175,6 @@ namespace ImagesConverter.Controllers
                 }
                 return File(memoryStream.ToArray(), "application/zip", "Export_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".zip");
             }
-        }
-
-        private ImageFile MapImageToImageFile (ImageModel model, HttpPostedFileBase image)
-        {
-            var result = new ImageFile() 
-            { 
-                DateConverted = DateTime.Now, 
-                ImageName = image.FileName,
-                MimeType = image.ContentType,
-                Title = model.Title
-            };
-
-            byte[] imageAsBytes = new byte[image.ContentLength];
-            using (BinaryReader binaryReader = new BinaryReader(image.InputStream))
-            {
-                imageAsBytes = binaryReader.ReadBytes(image.ContentLength);
-            }
-            string imageAsBase64 = Convert.ToBase64String(imageAsBytes);
-
-            result.ImageBase64 = imageAsBase64;
-
-            return result;
         }
     }
 }
