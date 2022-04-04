@@ -3,23 +3,17 @@ using ImagesConverter.Models;
 using ImagesConverter.Services;
 using ImagesConverter.Tests.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
-using System.Web.UI.WebControls;
 
 namespace ImagesConverter.Tests.Controllers
 {
     [TestClass]
     public class HomeControllerTest
     {
-        private static int id;
+        private static int Id { get; set; }
 
         [TestMethod]
         public async Task AddImage()
@@ -44,9 +38,8 @@ namespace ImagesConverter.Tests.Controllers
                 Assert.AreEqual(imgs[0].Id, result.Id);
 
                 // Save result for download test
-                id = result.Id;
+                Id = result.Id;
             }
-
         }
 
         [TestMethod]
@@ -73,7 +66,7 @@ namespace ImagesConverter.Tests.Controllers
         public async Task GetZipWithBase64s()
         {
             HomeController controller = new HomeController();
-            var result = await controller.GetZipWithBase64s(id.ToString());
+            var result = await controller.GetZipWithBase64s(Id.ToString());
 
             Assert.AreEqual((result as FileContentResult).ContentType, "application/zip");
             Assert.IsNotNull((result as FileContentResult).FileContents);

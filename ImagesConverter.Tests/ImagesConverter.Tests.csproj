@@ -111,6 +111,7 @@
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Helpers\HttpPostedFileBaseMock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ImagesDbServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
